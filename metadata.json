@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "organization": "warden.dev",
   "date": "February 2026",
   "abstract": "Manage Docker-based local development environments for PHP applications including Magento, Laravel, Symfony, WordPress, and Drupal. Wraps docker-compose with intelligent defaults and service orchestration.",
