@@ -6,7 +6,7 @@ Agent Skill for [Warden](https://warden.dev) – a Docker-based local developmen
 
 ```bash
 # Via skills CLI
-npx skills add lbajsarowicz/warden-skill
+npx skills add lbajsarowicz/ai-skills-warden
 
 # Or via npm
 npm install @lbajsarowicz/warden-skill

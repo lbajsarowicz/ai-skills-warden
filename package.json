@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lbajsarowicz/warden-skill.git"
+    "url": "git+https://github.com/lbajsarowicz/ai-skills-warden.git"
   },
   "files": [
     "SKILL.md",
