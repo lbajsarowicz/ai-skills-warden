@@ -43,6 +43,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
       - name: Configure Git
         run: |
           git config user.name "github-actions[bot]"
@@ -57,3 +58,15 @@ jobs:
           git push origin main
           git tag "v$VERSION"
           git push origin "v$VERSION"
+
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ needs.calculate-version.outputs.version }}
+          generate_release_notes: true
+          prerelease: ${{ contains(needs.calculate-version.outputs.version, '-') }}
