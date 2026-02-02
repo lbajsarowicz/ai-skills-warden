@@ -1,0 +1,32 @@
+{
+  "name": "@lbajsarowicz/warden-skill",
+  "version": "1.0.0",
+  "description": "Agent Skill for Warden Docker development environments",
+  "keywords": [
+    "warden",
+    "docker",
+    "magento",
+    "laravel",
+    "php",
+    "agent-skill",
+    "cursor",
+    "ai"
+  ],
+  "author": "Lukasz Bajsarowicz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lbajsarowicz/warden-skill.git"
+  },
+  "files": [
+    "SKILL.md",
+    "metadata.json",
+    "references/",
+    "examples/",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
