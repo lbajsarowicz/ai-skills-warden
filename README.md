@@ -51,15 +51,15 @@ Releases are automated via Conventional Commits. Merge a PR with `feat:` or `fix
    - Add as GitHub secret: `NPM_TOKEN`
 
 2. **GitHub PAT for release**
-   - Create a Personal Access Token (classic: `repo` scope, or fine-grained: `Contents` + `Pull requests` = Read and write)
+   - Create a Personal Access Token (classic: `repo` scope, or fine-grained: `Contents` + `Metadata` = Read and write)
    - Add as GitHub secret: `RELEASE_TOKEN`
-   - Workflow creates a release PR and merges it (no direct push to protected `main`)
+   - **Branch protection**: If `main` is protected, add the PAT owner (e.g. `lbajsarowicz`) to **Settings → Branches → main → Allow specified actors to bypass required pull requests**. Otherwise the workflow's direct push will be rejected.
 
 ### Release Flow
 
 1. Commit with Conventional Commits: `feat(commands): add X`, `fix(troubleshooting): correct Y`
 2. Open PR and merge to `main`
-3. CI calculates version from commits and creates tag (e.g. `v1.1.0`)
+3. CI calculates version, pushes version bump to `main`, creates tag (e.g. `v1.1.0`)
 4. Release workflow publishes to npm and creates GitHub Release
 
 ## License
