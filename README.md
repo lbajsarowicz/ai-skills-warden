@@ -39,6 +39,28 @@ Teaches AI agents how to:
 - [Warden Documentation](https://docs.warden.dev)
 - [Warden GitHub](https://github.com/wardenenv/warden)
 
+## Publishing (Maintainers)
+
+Releases are automated via Conventional Commits. Merge a PR with `feat:` or `fix:` commits to trigger a new version and npm publish.
+
+### One-time Setup
+
+1. **npm access token**
+   - Create at https://www.npmjs.com/settings/lbajsarowicz/tokens
+   - Type: Automation
+   - Add as GitHub secret: `NPM_TOKEN`
+
+2. **GitHub token for release automation**
+   - Create a Personal Access Token with `contents: write`
+   - Add as GitHub secret: `RELEASE_TOKEN`
+
+### Release Flow
+
+1. Commit with Conventional Commits: `feat(commands): add X`, `fix(troubleshooting): correct Y`
+2. Open PR and merge to `main`
+3. CI calculates version from commits and creates tag (e.g. `v1.1.0`)
+4. Release workflow publishes to npm and creates GitHub Release
+
 ## License
 
 MIT
