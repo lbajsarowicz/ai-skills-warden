@@ -47,11 +47,13 @@ Releases are automated via Conventional Commits. Merge a PR with `feat:` or `fix
 
 1. **npm access token**
    - Create at https://www.npmjs.com/settings/lbajsarowicz/tokens
-   - Type: Automation
+   - Type: Automation, enable "Bypass two-factor authentication (2FA)"
    - Add as GitHub secret: `NPM_TOKEN`
 
-2. **Workflow permissions**
-   - Ensure Actions have write access: Settings → Actions → General → Workflow permissions → Read and write
+2. **GitHub PAT for release (bypasses branch protection)**
+   - Create a Personal Access Token with `contents: write`
+   - Add as GitHub secret: `RELEASE_TOKEN`
+   - Required so the workflow can push version commits to protected `main`
 
 ### Release Flow
 

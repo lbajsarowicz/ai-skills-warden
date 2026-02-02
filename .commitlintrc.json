@@ -9,7 +9,7 @@
     "scope-enum": [
       2,
       "always",
-      ["skill", "commands", "environments", "troubleshooting", "workflows", "deps", "release", "config"]
+      ["skill", "commands", "environments", "troubleshooting", "workflows", "deps", "release", "config", "ci"]
     ],
     "scope-empty": [1, "never"],
     "header-max-length": [2, "always", 100]

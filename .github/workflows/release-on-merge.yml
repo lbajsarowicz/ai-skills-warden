@@ -41,6 +41,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -49,16 +50,23 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-      - name: Update versions and push
+      - name: Update versions via PR
         run: |
           VERSION="${{ needs.calculate-version.outputs.version }}"
+          BRANCH="release/v$VERSION"
           npm version $VERSION --no-git-tag-version
           node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('metadata.json')); m.version='$VERSION'; fs.writeFileSync('metadata.json', JSON.stringify(m,null,2));"
           git add package.json metadata.json
           git commit -m "chore(release): bump version to $VERSION"
-          git push origin main
-          git tag "v$VERSION"
+          git push origin HEAD:refs/heads/$BRANCH
+          gh pr create --base main --head $BRANCH --title "chore(release): bump version to $VERSION" --body "Automated version bump"
+          gh pr merge $BRANCH --merge
+          sleep 5
+          git fetch origin main
+          git tag "v$VERSION" origin/main
           git push origin "v$VERSION"
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
       - name: Publish to npm
         run: npm publish --provenance --access public
