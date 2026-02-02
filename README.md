@@ -50,9 +50,8 @@ Releases are automated via Conventional Commits. Merge a PR with `feat:` or `fix
    - Type: Automation
    - Add as GitHub secret: `NPM_TOKEN`
 
-2. **GitHub token for release automation**
-   - Create a Personal Access Token with `contents: write`
-   - Add as GitHub secret: `RELEASE_TOKEN`
+2. **Workflow permissions**
+   - Ensure Actions have write access: Settings → Actions → General → Workflow permissions → Read and write
 
 ### Release Flow
 
