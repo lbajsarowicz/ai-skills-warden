@@ -64,4 +64,18 @@ Releases are automated via Conventional Commits. Merge a PR with `feat:` or `fix
 
 ## License
 
-MIT
+MIT - See [LICENSE](LICENSE) for details.
+
+---
+
+<div align="center">
+
+### ☕ Enjoying this skill?
+
+**Consider sponsoring the maintainer** – it helps keep projects like this free and open.
+
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/lbajsarowicz?style=for-the-badge&logo=github)](https://github.com/sponsors/lbajsarowicz)
+
+**[Sponsor on GitHub →](https://github.com/sponsors/lbajsarowicz)**
+
+</div>
