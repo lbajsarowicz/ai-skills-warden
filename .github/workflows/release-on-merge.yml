@@ -1,0 +1,60 @@
+name: Release on Merge
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  calculate-version:
+    name: Calculate Next Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.calc.outputs.version }}
+      should-release: ${{ steps.calc.outputs.should-release }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - id: calc
+        run: |
+          NEXT=$(node scripts/calculate-version.js)
+          CURR=$(node -p "require('./package.json').version")
+          if [ "$NEXT" != "$CURR" ]; then
+            echo "should-release=true" >> $GITHUB_OUTPUT
+            echo "version=$NEXT" >> $GITHUB_OUTPUT
+          else
+            echo "should-release=false" >> $GITHUB_OUTPUT
+          fi
+
+  update-and-tag:
+    name: Update Version and Tag
+    needs: calculate-version
+    if: needs.calculate-version.outputs.should-release == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Update versions and push
+        run: |
+          VERSION="${{ needs.calculate-version.outputs.version }}"
+          npm version $VERSION --no-git-tag-version
+          node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('metadata.json')); m.version='$VERSION'; fs.writeFileSync('metadata.json', JSON.stringify(m,null,2));"
+          git add package.json metadata.json
+          git commit -m "chore(release): bump version to $VERSION"
+          git push origin main
+          git tag "v$VERSION"
+          git push origin "v$VERSION"

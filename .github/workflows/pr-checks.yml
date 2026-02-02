@@ -1,0 +1,35 @@
+name: PR Checks
+on:
+  pull_request:
+
+jobs:
+  commitlint:
+    name: Validate Commit Messages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm ci
+      - uses: wagoid/commitlint-github-action@v6
+        with:
+          configFile: .commitlintrc.json
+
+  validate:
+    name: Validate Skill Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate SKILL.md exists
+        run: test -f SKILL.md
+      - name: Check SKILL.md line count (max 500)
+        run: |
+          lines=$(wc -l < SKILL.md)
+          [ "$lines" -le 500 ] || (echo "SKILL.md: $lines lines > 500" && exit 1)
+      - name: Validate JSON files
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('metadata.json'))"
+          node -e "JSON.parse(require('fs').readFileSync('package.json'))"
