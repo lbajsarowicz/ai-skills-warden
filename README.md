@@ -50,10 +50,10 @@ Releases are automated via Conventional Commits. Merge a PR with `feat:` or `fix
    - Type: Automation, enable "Bypass two-factor authentication (2FA)"
    - Add as GitHub secret: `NPM_TOKEN`
 
-2. **GitHub PAT for release (bypasses branch protection)**
-   - Create a Personal Access Token with `contents: write`
+2. **GitHub PAT for release**
+   - Create a Personal Access Token (classic: `repo` scope, or fine-grained: `Contents` + `Pull requests` = Read and write)
    - Add as GitHub secret: `RELEASE_TOKEN`
-   - Required so the workflow can push version commits to protected `main`
+   - Workflow creates a release PR and merges it (no direct push to protected `main`)
 
 ### Release Flow
 
